@@ -1,10 +1,13 @@
 package com.xyes.springboot.config;
 
+import com.xyes.springboot.aop.AuthInterceptorHandler;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.ArrayList;
@@ -23,7 +26,16 @@ import java.util.List;
  * @author xujun
  */
 @Configuration
+@RequiredArgsConstructor
 public class WebMvcConfig implements WebMvcConfigurer {
+
+    private final AuthInterceptorHandler authInterceptorHandler;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(authInterceptorHandler)
+                .addPathPatterns("/**");
+    }
 
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {

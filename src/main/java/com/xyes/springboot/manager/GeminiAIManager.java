@@ -26,15 +26,35 @@ public class GeminiAIManager {
     @Value("${gemini.api-url:https://generativelanguage.googleapis.com/v1beta/models}")
     private String apiUrl;
     
+    @Value("${gemini.proxy.enabled:false}")
+    private boolean proxyEnabled;
+    
+    @Value("${gemini.proxy.host:127.0.0.1}")
+    private String proxyHost;
+    
+    @Value("${gemini.proxy.port:7890}")
+    private int proxyPort;
+    
     private final Gson gson = new Gson();
     private final OkHttpClient httpClient;
     
     public GeminiAIManager() {
-        this.httpClient = new OkHttpClient.Builder()
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .connectTimeout(5, TimeUnit.SECONDS)  // 连接超时5秒
                 .readTimeout(30, TimeUnit.SECONDS)    // 读取超时30秒（Gemini响应很快）
-                .writeTimeout(5, TimeUnit.SECONDS)    // 写入超时5秒
-                .build();
+                .writeTimeout(5, TimeUnit.SECONDS);   // 写入超时5秒
+        
+        // 如果启用代理，配置代理
+        if (proxyEnabled) {
+            java.net.Proxy proxy = new java.net.Proxy(
+                java.net.Proxy.Type.HTTP,
+                new java.net.InetSocketAddress(proxyHost, proxyPort)
+            );
+            builder.proxy(proxy);
+            log.info("Gemini API 已启用代理: {}:{}", proxyHost, proxyPort);
+        }
+        
+        this.httpClient = builder.build();
     }
     
     /**

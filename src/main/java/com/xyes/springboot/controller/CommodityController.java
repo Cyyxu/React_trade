@@ -102,6 +102,8 @@ public class CommodityController {
 
     /**
      * 分页获取商品列表（封装类）
+     * 普通用户：只能看到自己发布的商品
+     * 管理员：可以看到所有商品
      *
      * @param commodityQueryRequest 商品查询请求
      * @param request HTTP请求
@@ -110,12 +112,8 @@ public class CommodityController {
     @PostMapping("/list/page/vo")
     public Page<CommodityVO> listCommodityVOByPage(@RequestBody CommodityQueryRequest commodityQueryRequest,
                                                                  HttpServletRequest request) {
-        long current = commodityQueryRequest.getCurrent();
-        long size = commodityQueryRequest.getPageSize();
-        ThrowUtils.throwIf(size > 2000, ErrorCode.PARAMS_ERROR);
-        Page<Commodity> commodityPage = commodityService.page(new Page<>(current, size),
-                commodityService.getQueryWrapper(commodityQueryRequest));
-        return commodityService.getCommodityVOPage(commodityPage, request);
+        // 管理员可以看到所有商品，普通用户只能看到自己的商品
+        return commodityService.listCommodityVOByPageWithAuth(commodityQueryRequest, request);
     }
 
     /**

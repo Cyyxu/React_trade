@@ -109,8 +109,7 @@ public class UserController {
      */
     @PostMapping("/update")
     @RequireRole(UserConstant.ADMIN_ROLE)
-    public Boolean updateUser(@RequestBody UserUpdateRequest userUpdateRequest,
-                                            HttpServletRequest request) {
+    public Boolean updateUser(@RequestBody UserUpdateRequest userUpdateRequest, HttpServletRequest request) {
         return userService.updateUserById(userUpdateRequest, request);
     }
 
@@ -148,8 +147,7 @@ public class UserController {
      */
     @PostMapping("/list/page")
     @RequireRole(UserConstant.ADMIN_ROLE)
-    public Page<User> listUserByPage(@RequestBody UserQueryRequest userQueryRequest,
-                                                   HttpServletRequest request) {
+    public Page<User> listUserByPage(@RequestBody UserQueryRequest userQueryRequest, HttpServletRequest request) {
         return userService.listUserByPage(userQueryRequest, request);
     }
 
@@ -161,8 +159,7 @@ public class UserController {
      * @return 用户VO分页列表
      */
     @PostMapping("/list/page/vo")
-    public Page<UserVO> listUserVOByPage(@RequestBody UserQueryRequest userQueryRequest,
-                                                       HttpServletRequest request) {
+    public Page<UserVO> listUserVOByPage(@RequestBody UserQueryRequest userQueryRequest,HttpServletRequest request) {
         return userService.listUserVOByPage(userQueryRequest, request);
     }
 
@@ -174,8 +171,7 @@ public class UserController {
      * @return 是否更新成功
      */
     @PostMapping("/update/my")
-    public Boolean updateMyUser(@RequestBody UserUpdateMyRequest userUpdateMyRequest,
-                                              HttpServletRequest request) {
+    public Boolean updateMyUser(@RequestBody UserUpdateMyRequest userUpdateMyRequest, HttpServletRequest request) {
         return userService.updateMyUser(userUpdateMyRequest, request);
     }
 }

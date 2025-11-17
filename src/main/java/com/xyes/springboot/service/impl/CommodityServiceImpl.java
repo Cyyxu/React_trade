@@ -239,6 +239,7 @@ public class CommodityServiceImpl extends ServiceImpl<Commoditymapper, Commodity
 
     /**
      * 删除商品（包含权限校验）
+     * 用户可以删除自己的商品，管理员可以删除所有商品
      *
      * @param id
      * @param request
@@ -248,12 +249,15 @@ public class CommodityServiceImpl extends ServiceImpl<Commoditymapper, Commodity
     public Boolean deleteCommodityById(Long id, HttpServletRequest request) {
         ThrowUtils.throwIf(id == null || id <= 0, ErrorCode.PARAMS_ERROR);
         
+        // 获取当前登录用户
+        User loginUser = userService.getLoginUser(request);
+        
         // 判断是否存在
         Commodity oldCommodity = this.getById(id);
         ThrowUtils.throwIf(oldCommodity == null, ErrorCode.NOT_FOUND_ERROR);
         
-        // 仅管理员可删除
-        if (!userService.isAdmin(request)) {
+        // 仅本人或管理员可删除
+        if (!oldCommodity.getAdminId().equals(loginUser.getId()) && !userService.isAdmin(loginUser)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
         
@@ -304,9 +308,13 @@ public class CommodityServiceImpl extends ServiceImpl<Commoditymapper, Commodity
     public Boolean editCommodityById(CommodityEditRequest commodityEditRequest, HttpServletRequest request) {
         ThrowUtils.throwIf(commodityEditRequest == null || commodityEditRequest.getId() <= 0, ErrorCode.PARAMS_ERROR);
         
+        log.info("开始编辑商品，ID: {}, 请求数据: {}", commodityEditRequest.getId(), commodityEditRequest);
+        
         // DTO转实体
         Commodity commodity = new Commodity();
         BeanUtils.copyProperties(commodityEditRequest, commodity);
+        
+        log.info("转换后的商品实体: {}", commodity);
         
         // 数据校验
         validCommodity(commodity, false);
@@ -316,6 +324,7 @@ public class CommodityServiceImpl extends ServiceImpl<Commoditymapper, Commodity
         
         // 更新数据库
         boolean result = this.updateById(commodity);
+        log.info("商品更新结果: {}, 商品ID: {}", result, commodity.getId());
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         
         return true;
@@ -323,6 +332,7 @@ public class CommodityServiceImpl extends ServiceImpl<Commoditymapper, Commodity
 
     /**
      * 验证编辑权限
+     * 用户可以编辑自己的商品，管理员可以编辑所有商品
      */
     private void validateEditPermission(CommodityEditRequest commodityEditRequest, HttpServletRequest request) {
         long id = commodityEditRequest.getId();
@@ -332,7 +342,9 @@ public class CommodityServiceImpl extends ServiceImpl<Commoditymapper, Commodity
         // 判断是否需要跳过权限检查（更新浏览量或者收藏量，无需权限检查）
         if (!shouldSkipPermissionCheck(commodityEditRequest)) {
             User loginUser = userService.getLoginUser(request);
-            if (!userService.isAdmin(loginUser)) {
+            
+            // 仅本人或管理员可编辑
+            if (!oldCommodity.getAdminId().equals(loginUser.getId()) && !userService.isAdmin(loginUser)) {
                 throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
             }
         }
@@ -352,6 +364,44 @@ public class CommodityServiceImpl extends ServiceImpl<Commoditymapper, Commodity
         // 获取当前登录用户并设置查询条件
         User loginUser = userService.getLoginUser(request);
         commodityQueryRequest.setAdminId(loginUser.getId());
+        
+        long current = commodityQueryRequest.getCurrent();
+        long size = commodityQueryRequest.getPageSize();
+        
+        // 限制爬虫
+        ThrowUtils.throwIf(size > 2000, ErrorCode.PARAMS_ERROR);
+        
+        // 查询数据库
+        Page<Commodity> commodityPage = this.page(
+                new Page<>(current, size),
+                this.getQueryWrapper(commodityQueryRequest)
+        );
+        
+        // 获取封装类
+        return this.getCommodityVOPage(commodityPage, request);
+    }
+
+    /**
+     * 分页获取商品列表（带权限控制）
+     * 管理员：返回所有商品
+     * 普通用户：只返回自己发布的商品
+     *
+     * @param commodityQueryRequest
+     * @param request
+     * @return
+     */
+    @Override
+    public Page<CommodityVO> listCommodityVOByPageWithAuth(CommodityQueryRequest commodityQueryRequest, HttpServletRequest request) {
+        ThrowUtils.throwIf(commodityQueryRequest == null, ErrorCode.PARAMS_ERROR);
+        
+        // 获取当前登录用户
+        User loginUser = userService.getLoginUser(request);
+        
+        // 如果不是管理员，只能查看自己发布的商品
+        if (!userService.isAdmin(loginUser)) {
+            commodityQueryRequest.setAdminId(loginUser.getId());
+        }
+        // 管理员可以查看所有商品，不设置 adminId 过滤
         
         long current = commodityQueryRequest.getCurrent();
         long size = commodityQueryRequest.getPageSize();

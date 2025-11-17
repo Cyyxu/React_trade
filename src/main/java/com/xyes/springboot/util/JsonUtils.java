@@ -8,7 +8,9 @@ import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import lombok.extern.slf4j.Slf4j;
+import lombok.val;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,8 +24,9 @@ import java.util.*;
  * @version 1.1
  * @since 2025/7/18
  */
-@Slf4j
 public final class JsonUtils {
+    
+    private static final Logger log = LoggerFactory.getLogger(JsonUtils.class);
 
     /**
      * 默认ObjectMapper实例 - 线程安全

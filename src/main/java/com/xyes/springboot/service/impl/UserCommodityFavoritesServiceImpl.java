@@ -159,13 +159,31 @@ public class UserCommodityFavoritesServiceImpl extends ServiceImpl<UserCommodity
     public Long addUserCommodityFavorites(UserCommodityFavoritesAddRequest userCommodityFavoritesAddRequest, HttpServletRequest request) {
         ThrowUtils.throwIf(userCommodityFavoritesAddRequest == null, ErrorCode.PARAMS_ERROR);
         
+        // 获取当前登录用户
+        User loginUser = userService.getLoginUser(request);
+        Long userId = loginUser.getId();
+        Long commodityId = userCommodityFavoritesAddRequest.getCommodityId();
+        
+        // 检查是否已经收藏过
+        UserCommodityFavorites existingFavorite = this.lambdaQuery()
+                .eq(UserCommodityFavorites::getUserId, userId)
+                .eq(UserCommodityFavorites::getCommodityId, commodityId)
+                .one();
+        
+        // 如果已经收藏过，直接返回已有的收藏ID
+        if (existingFavorite != null) {
+            // 如果之前取消了收藏（status=0），则更新为正常收藏
+            if (existingFavorite.getStatus() == 0) {
+                existingFavorite.setStatus(1);
+                this.updateById(existingFavorite);
+            }
+            return existingFavorite.getId();
+        }
+        
         // DTO转实体
         UserCommodityFavorites userCommodityFavorites = new UserCommodityFavorites();
         BeanUtils.copyProperties(userCommodityFavoritesAddRequest, userCommodityFavorites);
-        
-        // 获取当前登录用户并设置userId
-        User loginUser = userService.getLoginUser(request);
-        userCommodityFavorites.setUserId(loginUser.getId());
+        userCommodityFavorites.setUserId(userId);
         
         // 数据校验
         validUserCommodityFavorites(userCommodityFavorites, true);

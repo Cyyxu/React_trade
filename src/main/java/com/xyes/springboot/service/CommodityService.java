@@ -67,6 +67,17 @@ public interface CommodityService extends IService<Commodity> {
     Page<CommodityVO> getMyCommodityVOPage(CommodityQueryRequest commodityQueryRequest, HttpServletRequest request);
 
     /**
+     * 分页获取商品列表（带权限控制）
+     * 管理员：返回所有商品
+     * 普通用户：只返回自己发布的商品
+     *
+     * @param commodityQueryRequest
+     * @param request
+     * @return
+     */
+    Page<CommodityVO> listCommodityVOByPageWithAuth(CommodityQueryRequest commodityQueryRequest, HttpServletRequest request);
+
+    /**
      * 购买商品（业务逻辑）
      *
      * @param buyRequest

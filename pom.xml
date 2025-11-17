@@ -9,7 +9,7 @@
         <version>2.7.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.xiaobaitiao</groupId>
+    <groupId>com.xyes</groupId>
     <artifactId>vue3_trade_backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>springboot-init</name>
@@ -48,6 +48,12 @@
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>2.2.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.zaxxer</groupId>
+                    <artifactId>HikariCP</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
         <dependency>
@@ -75,12 +81,6 @@
 <!--            <artifactId>wx-java-mp-spring-boot-starter</artifactId>-->
 <!--            <version>4.4.0</version>-->
 <!--        </dependency>-->
-        <!-- https://doc.xiaominfo.com/docs/quick-start#openapi2 -->
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
-            <version>4.4.0</version>
-        </dependency>
         <!-- https://cloud.tencent.com/document/product/436/10199-->
         <dependency>
             <groupId>com.qcloud</groupId>
@@ -193,6 +193,11 @@
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
+        </dependency>
+        <!-- WebSocket support -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
         <!-- 接入滑动验证 https://ajcaptcha.beliefteam.cn/captcha-doc/captchaDoc/java.html-->
         <!--        <dependency>-->

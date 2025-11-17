@@ -23,11 +23,16 @@ spring:
     url: jdbc:mysql://120.26.104.183:3306/trade
     username: trade
     password: 123456
+#    url: jdbc:mysql://192.168.150.101:3306/trade
+#    username: root
+#    password: 123
 
   redis:
-    database: 10
-    host: localhost
+    database: 0
+#    host: 192.168.150.101
+    host: 120.26.104.183
     port: 6379
+    password: 123321
     timeout: 5000
   # Elasticsearch 配置
   # todo 需替换配置，然后取消注释
@@ -110,4 +115,9 @@ gemini:
   api-key: AIzaSyDN00Ysr_QsjXkZLWgewJZlEtaet9ZkDuA
   model: gemini-2.0-flash # 可选: gemini-2.0-flash, gemini-pro, gemini-pro-vision 等
   api-url: https://generativelanguage.googleapis.com/v1beta/models
+  # 代理配置（解决地区限制问题）
+  proxy:
+    enabled: true  # 启用代理
+    host: 127.0.0.1  # 代理服务器地址
+    port: 7897  # 代理服务器端口
 

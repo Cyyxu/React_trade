@@ -25,12 +25,7 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                // 允许发送 Cookie 和认证信息（JWT Token）
                 .allowCredentials(true)
-                // 允许的源（支持开发和生产环境）
-                // 开发环境：http://localhost:3000, http://127.0.0.1:3000 等
-                // 生产环境：根据实际部署的前端域名配置
-                // 使用 allowedOriginPatterns 而不是 allowedOrigins，避免与 allowCredentials 冲突
                 .allowedOriginPatterns(
                         "http://localhost:*",
                         "http://127.0.0.1:*",
