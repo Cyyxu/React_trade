@@ -1,20 +1,24 @@
 server:
-  port: ${server.port:9080}
+  address: 0.0.0.0
+  port: 8109
   servlet:
-    context-path: ${server.servlet.context-path:/offshore-wind-security}
+    context-path: /api
+    session:
+      cookie:
+        max-age: 2592000
 
 spring:
   application:
-    name: ${spring.application.name:Offshore-Wind-Security}
+    name: 智能 AI 校园二手交易平台
   profiles:
-    active: ${spring.profiles.active:dev}
+    active: dev
 
   # 数据源配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${datasource.host:127.0.0.1}:${datasource.port:3306}/${datasource.db:offshore_wind_security}?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=utf8&allowPublicKeyRetrieval=true&autoReconnect=true&failOverReadOnly=false&maxReconnects=3&initialTimeout=2
-    username: ${datasource.username:root}
-    password: ${datasource.password:root}
+    url: jdbc:mysql://120.26.104.183:3306/trade?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=utf8&allowPublicKeyRetrieval=true&autoReconnect=true&failOverReadOnly=false&maxReconnects=3&initialTimeout=2
+    username: trade
+    password: 123456
     hikari:
       # 连接池配置
       # === 核心连接池配置 ===
@@ -85,21 +89,21 @@ spring:
 
   # Redis 配置
   redis:
-    host: ${redis.host:127.0.0.1}
-    port: ${redis.port:6379}
-    password: ${redis.password:}
-    database: ${redis.database:0}
-    timeout: ${redis.timeout:5000}
+    host: 120.26.104.183
+    port: 6379
+    password: 123321
+    database: 0
+    timeout: 5000
 
   # Session 配置
   session:
     store-type: redis
-    timeout: ${session.timeout:2592000}
+    timeout: 2592000
 
   # 文件上传配置
   servlet:
     multipart:
-      max-file-size: ${file.max-size:10MB}
+      max-file-size: 10MB
 
   # 允许循环引用
   main:
@@ -122,7 +126,7 @@ spring:
   cloud:
     sentinel:
       transport:
-        dashboard: ${sentinel.dashboard:localhost:8858}
+        dashboard: localhost:8858
 
 # MyBatis Plus 配置
 mybatis-plus:
@@ -146,30 +150,30 @@ springdoc:
 
 # JWT 配置
 jwt:
-  tokenHeader: ${jwt.tokenHeader:Authorization}
-  secret: ${jwt.secret:pX8KoX7bR3Lm9yQ1N8sT4wG2cF6eU5vH0jA7kL4mQ9oT3rF8vC1aS6dE=}
-  expiration: ${jwt.expiration:36000000}
-  tokenHead: ${jwt.tokenHead:Bearer}
+  tokenHeader: Authorization
+  secret: pX8KoX7bR3Lm9yQ1N8sT4wG2cF6eU5vH0jA7kL4mQ9oT3rF8vC1aS6dE=
+  expiration: 36000000
+  tokenHead: Bearer
 
 # 讯飞星火AI配置
 spark:
-  appid: ${spark.appid:74df4e55}
-  api-key: ${spark.api-key:cd06ffe74b46ab76e53468ac90431cf5}
-  api-secret: ${spark.api-secret:NTNmODM0Y2QyZDBhNzk1YjdkZTZiMGE0}
+  appid: 74df4e55
+  api-key: cd06ffe74b46ab76e53468ac90431cf5
+  api-secret: NTNmODM0Y2QyZDBhNzk1YjdkZTZiMGE0
 
 # Google Gemini AI配置
 gemini:
-  api-key: ${gemini.api-key:AIzaSyDN00Ysr_QsjXkZLWgewJZlEtaet9ZkDuA}
-  model: ${gemini.model:gemini-2.0-flash}
-  api-url: ${gemini.api-url:https://generativelanguage.googleapis.com/v1beta/models}
+  api-key: AIzaSyDN00Ysr_QsjXkZLWgewJZlEtaet9ZkDuA
+  model: gemini-2.0-flash
+  api-url: https://generativelanguage.googleapis.com/v1beta/models
   proxy:
-    enabled: ${gemini.proxy.enabled:true}
-    host: ${gemini.proxy.host:127.0.0.1}
-    port: ${gemini.proxy.port:7897}
+    enabled: true
+    host: 127.0.0.1
+    port: 7897
 
 # 阿里 OSS 配置
 alioss:
-  endpoint: ${alioss.endpoint:oss-cn-beijing.aliyuncs.com}
-  access-key-id: ${alioss.access-key-id:}
-  access-key-secret: ${alioss.access-key-secret:}
-  bucket-name: ${alioss.bucket-name:}
+  endpoint: oss-cn-beijing.aliyuncs.com
+  access-key-id: LTAI5tSmJGuUCTkRxeG1PFqw
+  access-key-secret: ywetjCcX0poK5Ww1gzY6C0KvztY7F3
+  bucket-name: xujundeyun
