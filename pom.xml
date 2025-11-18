@@ -7,16 +7,31 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.7.2</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
-    <groupId>com.xyes</groupId>
-    <artifactId>vue3_trade_backend</artifactId>
+    <groupId>com.xyex</groupId>
+    <artifactId>cyyai-back</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>springboot-init</name>
+    <name>cyyai-back</name>
     <properties>
         <java.version>17</java.version>
+        <!-- 依赖版本管理 -->
+        <mybatis-spring-boot.version>2.2.2</mybatis-spring-boot.version>
+        <mybatis-plus.version>3.5.2</mybatis-plus.version>
+        <qiniu-java-sdk.version>[7.13.0, 7.13.99]</qiniu-java-sdk.version>
+        <jjwt.version>0.9.0</jjwt.version>
+        <easyexcel.version>3.1.1</easyexcel.version>
+        <java-websocket.version>1.3.8</java-websocket.version>
+        <okhttp.version>4.10.0</okhttp.version>
+        <okio.version>2.10.0</okio.version>
+        <guava.version>30.1-jre</guava.version>
+        <jsoup.version>1.15.3</jsoup.version>
+        <gson.version>2.9.0</gson.version>
+        <fastjson.version>2.0.53</fastjson.version>
+        <hutool.version>5.8.8</hutool.version>
+        <cos-api.version>5.6.89</cos-api.version>
     </properties>
-    
+
     <!-- 添加阿里云Spring Cloud仓库 -->
     <repositories>
         <repository>
@@ -30,7 +45,7 @@
             <url>https://repo1.maven.org/maven2</url>
         </repository>
     </repositories>
-    
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -47,7 +62,7 @@
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>2.2.2</version>
+            <version>${mybatis-spring-boot.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.zaxxer</groupId>
@@ -55,13 +70,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.5.2</version>
+            <version>${mybatis-plus.version}</version>
         </dependency>
-        <!-- redis -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
@@ -70,33 +83,23 @@
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-data-redis</artifactId>
         </dependency>
-        <!-- elasticsearch-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
         </dependency>
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/com.github.binarywang/wx-java-mp-spring-boot-starter &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>com.github.binarywang</groupId>-->
-<!--            <artifactId>wx-java-mp-spring-boot-starter</artifactId>-->
-<!--            <version>4.4.0</version>-->
-<!--        </dependency>-->
-        <!-- https://cloud.tencent.com/document/product/436/10199-->
         <dependency>
             <groupId>com.qcloud</groupId>
             <artifactId>cos_api</artifactId>
-            <version>5.6.89</version>
+            <version>${cos-api.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
-        <!-- https://hutool.cn/docs/index.html#/-->
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.8.8</version>
+            <version>${hutool.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -124,87 +127,81 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--        七牛云COS使用-->
+        <!-- 七牛云存储SDK -->
         <dependency>
             <groupId>com.qiniu</groupId>
             <artifactId>qiniu-java-sdk</artifactId>
-            <version>[7.13.0, 7.13.99]</version>
+            <version>${qiniu-java-sdk.version}</version>
         </dependency>
-        <!--        QQ邮箱注册功能-->
+        <!-- 邮件发送 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
-        <!--        JWT依赖-->
-        <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api -->
+        <!-- JWT令牌认证 -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
-            <version>0.9.0</version>
+            <version>${jjwt.version}</version>
         </dependency>
-        <!-- https://github.com/alibaba/easyexcel -->
+        <!-- Excel导入导出 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>easyexcel</artifactId>
-            <version>3.1.1</version>
+            <version>${easyexcel.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.java-websocket/Java-WebSocket -->
+        <!-- WebSocket通信 -->
         <dependency>
             <groupId>org.java-websocket</groupId>
             <artifactId>Java-WebSocket</artifactId>
-            <version>1.3.8</version>
+            <version>${java-websocket.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
+        <!-- HTTP客户端 -->
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
-            <version>4.10.0</version>
+            <version>${okhttp.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.squareup.okio/okio -->
+        <!-- HTTP客户端IO库 -->
         <dependency>
             <groupId>com.squareup.okio</groupId>
             <artifactId>okio</artifactId>
-            <version>2.10.0</version>
+            <version>${okio.version}</version>
         </dependency>
+        <!-- Google工具库 -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>30.1-jre</version>
+            <version>${guava.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup  Java爬虫-->
+        <!-- HTML解析库（网页爬虫） -->
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>1.15.3</version>
+            <version>${jsoup.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <!-- JSON序列化库 -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.9.0</version>
+            <version>${gson.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+        <!-- 阿里JSON库 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>2.0.53</version>
+            <version>${fastjson.version}</version>
         </dependency>
-        <!-- Hibernate Validator for Bean Validation API implementation -->
+        <!-- Bean验证 -->
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
-        <!-- WebSocket support -->
+        <!-- WebSocket支持 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
-        <!-- 接入滑动验证 https://ajcaptcha.beliefteam.cn/captcha-doc/captchaDoc/java.html-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.anji-plus</groupId>-->
-        <!--            <artifactId>spring-boot-starter-captcha</artifactId>-->
-        <!--            <version>1.3.0</version>-->
-        <!--        </dependency>-->
     </dependencies>
 
     <build>
