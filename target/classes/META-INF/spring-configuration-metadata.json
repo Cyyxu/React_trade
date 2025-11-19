@@ -1,0 +1,36 @@
+{
+  "groups": [
+    {
+      "name": "jwt",
+      "type": "com.xyes.springboot.common.JwtProperties",
+      "sourceType": "com.xyes.springboot.common.JwtProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "jwt.expiration",
+      "type": "java.lang.Long",
+      "description": "JWT的超时时间",
+      "sourceType": "com.xyes.springboot.common.JwtProperties"
+    },
+    {
+      "name": "jwt.secret",
+      "type": "java.lang.String",
+      "description": "jwt加解密使用的密钥",
+      "sourceType": "com.xyes.springboot.common.JwtProperties"
+    },
+    {
+      "name": "jwt.token-head",
+      "type": "java.lang.String",
+      "description": "JWT负载中拿到的开头",
+      "sourceType": "com.xyes.springboot.common.JwtProperties"
+    },
+    {
+      "name": "jwt.token-header",
+      "type": "java.lang.String",
+      "description": "JWT存储的请求头",
+      "sourceType": "com.xyes.springboot.common.JwtProperties"
+    }
+  ],
+  "hints": []
+}
