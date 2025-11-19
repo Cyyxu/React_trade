@@ -1,0 +1,22 @@
+CREATE TABLE `user_info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `userAccount` varchar(256) NOT NULL COMMENT '账号',
+  `userPassword` varchar(512) NOT NULL COMMENT '密码',
+  `unionId` varchar(256) DEFAULT NULL COMMENT '微信开放平台id',
+  `mpOpenId` varchar(256) DEFAULT NULL COMMENT '公众号openId',
+  `userName` varchar(256) DEFAULT NULL COMMENT '用户昵称',
+  `userAvatar` varchar(1024) DEFAULT NULL COMMENT '用户头像',
+  `userProfile` varchar(512) DEFAULT NULL COMMENT '用户简介',
+  `userRole` varchar(256) NOT NULL DEFAULT 'user' COMMENT '用户角色：user/admin/ban',
+  `userPhone` varchar(255) DEFAULT NULL COMMENT '联系电话',
+  `userEmail` varchar(255) DEFAULT NULL COMMENT '邮箱',
+  `userSchool` varchar(255) DEFAULT NULL COMMENT '学校',
+  `userMajor` varchar(255) DEFAULT NULL COMMENT '专业',
+  `userAddress` varchar(500) DEFAULT NULL COMMENT '地址',
+  `editTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '编辑时间',
+  `createTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `isDelete` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否删除',
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `idx_unionId` (`unionId`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=1979893281187266563 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='用户';

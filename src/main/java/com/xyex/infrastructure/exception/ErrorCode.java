@@ -15,8 +15,10 @@ public enum ErrorCode {
     CONFLICT(409, "Conflict"),
     UNSUPPORTED_MEDIA_TYPE(415, "Unsupported media type"),
     VALIDATION_ERROR(422, "Validation failed"),
+    PARAMS_ERROR(400, "Parameter error: {message}"),
 
     // Server errors
+    SYSTEM_ERROR(500, "System error: {message}"),
     INTERNAL_SERVER_ERROR(500, "Internal server error :{message}"),
     BAD_GATEWAY(502, "Bad gateway"),
     SERVICE_UNAVAILABLE(503, "Service unavailable"),

@@ -1,0 +1,10 @@
+CREATE TABLE `user_ai_message` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `userInputText` varchar(4096) NOT NULL COMMENT '用户输入',
+  `aiGenerateText` text COMMENT 'AI生成的文本',
+  `userId` bigint(20) NOT NULL COMMENT '用户ID',
+  `createTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `isDelete` tinyint(4) NOT NULL DEFAULT '0' COMMENT '逻辑删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=1979826502156980227 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;

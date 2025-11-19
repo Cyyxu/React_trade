@@ -1,0 +1,20 @@
+CREATE TABLE `commodity` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '商品 ID',
+  `commodityName` varchar(255) NOT NULL COMMENT '商品名称',
+  `commodityDescription` varchar(2048) DEFAULT NULL COMMENT '商品简介',
+  `commodityAvatar` varchar(1024) DEFAULT NULL COMMENT '商品封面图',
+  `degree` varchar(255) DEFAULT NULL COMMENT '商品新旧程度（例如 9成新）',
+  `commodityTypeId` bigint(20) DEFAULT NULL COMMENT '商品分类 ID',
+  `adminId` bigint(20) NOT NULL COMMENT '管理员 ID （某人创建该商品）',
+  `isListed` tinyint(4) DEFAULT '0' COMMENT '是否上架（默认0未上架，1已上架）',
+  `commodityInventory` int(11) DEFAULT '0' COMMENT '商品数量（默认0）',
+  `price` decimal(10,2) NOT NULL COMMENT '商品价格',
+  `viewNum` int(11) DEFAULT '0' COMMENT '商品浏览量',
+  `favourNum` int(11) DEFAULT '0' COMMENT '商品收藏量',
+  `createTime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updateTime` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `isDelete` tinyint(4) DEFAULT '0' COMMENT '是否删除',
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `type_index` (`commodityTypeId`) USING BTREE,
+  KEY `name_index` (`commodityName`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=1900439195794169858 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
