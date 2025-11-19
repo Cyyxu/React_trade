@@ -1,31 +1,34 @@
 package com.xyex.infrastructure.exception;
 
-/**
- * 业务异常
- */
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class BusinessException extends RuntimeException {
 
-    private String code;
+    private Integer code;
+    private String message;
 
-    public BusinessException(String message) {
+    public BusinessException(ErrorCode resultCode) {
+        super(resultCode.getMessage());
+        this.code = resultCode.getCode();
+        this.message = resultCode.getMessage();
+    }
+
+    public BusinessException(ErrorCode resultCode, String message) {
         super(message);
+        this.code = resultCode.getCode();
+        // 替换resultCodeMessage中的{messages}占位符
+        this.message = replaceMessages(resultCode, message);
     }
 
-    public BusinessException(String code, String message) {
-        super(message);
-        this.code = code;
+    private static String replaceMessages(ErrorCode iErrCode, String message) {
+        if (message == null || message.isEmpty()) {
+            return iErrCode.getMessage().replace("{message}", "Know Error");
+        } else {
+            return iErrCode.getMessage().replace("{message}", message);
+        }
     }
 
-    public BusinessException(String code, String message, Throwable cause) {
-        super(message, cause);
-        this.code = code;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 }
