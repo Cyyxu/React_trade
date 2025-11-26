@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.xyex.infrastructure.filter.RequestMdcFilter;
+import com.xyex.infrastructure.interceptor.LoginUserInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -16,9 +17,18 @@ import java.time.format.DateTimeFormatter;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
+    private final LoginUserInterceptor loginUserInterceptor;
+
+    public WebMvcConfig(LoginUserInterceptor loginUserInterceptor) {
+        this.loginUserInterceptor = loginUserInterceptor;
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new RequestMdcFilter()).addPathPatterns("/**");
+        registry.addInterceptor(loginUserInterceptor)
+                .addPathPatterns("/user/**")
+                .excludePathPatterns("/user/login", "/user/register", "/user/profile/**");
     }
 
     /**

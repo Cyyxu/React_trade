@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @TableName("user_commodity_favorites")
 @Schema(name = "UserCommodityFavorites", description = "用户商品收藏实体类")
-public class UserCommodityFavorites extends BasicField implements Serializable {
+public class UserCommodityFavorite extends BasicField implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

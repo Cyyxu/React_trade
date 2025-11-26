@@ -44,6 +44,12 @@ public class UserInfo extends BasicField implements Serializable {
     private String userPassword;
 
     /**
+     * 旧密码（仅用于修改密码时使用）
+     */
+    @Schema(description = "旧密码（修改密码时使用）")
+    private transient String oldPassword;
+
+    /**
      * 微信开放平台id
      */
     @Schema(description = "微信开放平台id")
