@@ -1,0 +1,45 @@
+datasource:
+  host: 120.26.104.183
+  port: 3306
+  username: trade
+  password: 123456
+  db: trade
+
+redis:
+  database: 0
+  host: 120.26.104.183
+  port: 6379
+  password: 123321
+  timeout: 5000
+
+server:
+  port: 8109
+  servlet:
+    context-path: /api
+
+sentinel:
+  dashboard: localhost:8858
+
+alioss:
+  endpoint: oss-cn-beijing.aliyuncs.com
+  access-key-id: LTAI5tSmJGuUCTkReG1PFqw
+  access-key-secret: ywetjCcX0poK5Ww1gzY6C0KvztY7F3
+  bucket-name: xujundeyun
+
+jwt:
+  secret: pX8KoX7bR3Lm9yQ1N8sT4wG2cF6eU5vH0jA7kL4mQ9oT3rF8vC1aS6dE=
+  expiration: 36000000
+
+spark:
+  appid: 74df4e55
+  api-key: cd06ffe74b46ab76e53468ac90431cf5
+  api-secret: NTNmODM0Y2QyZDBhNzk1YjdkZTZiMGE0
+
+gemini:
+  api-key: AIzaSyDN00Ysr_QsjXkZLWgewJZlEtaet9ZkDuA
+  model: gemini-2.0-flash
+  api-url: https://generativelanguage.googleapis.com/v1beta/models
+  proxy:
+    enabled: true
+    host: 127.0.0.1
+    port: 7897

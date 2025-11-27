@@ -39,7 +39,7 @@ public class BasicField implements Serializable {
     @TableField(value = "updated_at", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedAt;
 
-    @Schema(description = "创建人名称")
+    @Schema(description = "创建人状态")
     @TableLogic(value = "active", delval = "delete")
     private String status;
 

@@ -27,7 +27,7 @@ public class CommodityScore extends BasicField implements Serializable {
     /**
      * 商品评分 ID
      */
-    @TableId(type = IdType.ASSIGN_ID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     @Schema(description = "商品评分ID")
     private Long id;
 

@@ -28,7 +28,7 @@ public class Commodity extends BasicField implements Serializable {
     /**
      * 商品 ID
      */
-    @TableId(type = IdType.ASSIGN_ID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     @Schema(description = "商品ID")
     private Long id;
 
